@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 圓形進度條範例</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery-circle-progress@1.2.2/dist/circle-progress.min.js"></script>
+
+    <style>
+        /* CSS 樣式區域 */
+
+        .speed-progress {
+            width: 200px;
+            height: 200px;
+            position: relative; /* 作為文字定位的參考點 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            /* 設置一個白色背景以模擬圖片中的效果 */
+        }
+
+        /* 確保圓形進度條容器定位在中間 */
+        #circle-wpm {
+            position: absolute;
+        }
+
+        /* 文字疊加層 */
+        .progress-text-overlay {
+            position: relative;
+            text-align: center;
+            color: #333;
+            z-index: 10; /* 確保文字在圓環之上 */
+        }
+
+        .main-number {
+            display: block;
+            font-size: 48px;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .label {
+            display: block;
+            font-size: 16px;
+            color: #777;
+            margin-top: 5px; /* 與上面的數字隔開 */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="speed-progress">
+        <div id="circle-wpm"></div>
+        
+        <div class="progress-text-overlay">
+            <span class="main-number"></span>
+            <span class="label">WPM</span>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript 腳本區域
+        $(document).ready(function() {
+            // 定義進度值 (42%)
+            const progressValue = 0.64; 
+
+            $('#circle-wpm').circleProgress({
+                value: progressValue, // 進度值 (0.42)
+                size: 180,   // 圓環直徑 (稍微小於容器 200px，保持邊距)
+                startAngle: -Math.PI / 2, // 從頂部 (12點鐘方向) 開始
+                thickness: 15, // 圓環線條粗細 (略微增粗以匹配圖片)
+                
+                // *** 實現頭尾圓角的關鍵 ***
+                lineCap: 'round', 
+                
+                // *** 實現圖片中的漸層色 (從藍到紫) ***
+                fill: {
+                    // 根據圖片的顏色趨勢設置漸層
+                    gradient: ['#0141AD', '#A052FF'], 
+                },
+                
+                // 軌道的背景色 (圖片中的淺灰色)
+                emptyFill: '#E0E0E0', 
+                
+                animation: {
+                    duration: 1200 // 動畫持續時間 (毫秒)
+                }
+            });
+
+            // 如果您想讓數字動態跳動，可以將 .main-number 的內容替換為以下程式碼：
+            $('#circle-wpm').on('circle-animation-progress', function(event, progress, stepValue) {
+                // stepValue 是從 0 到 value (0.42) 的值
+                $(this).parent().find('.main-number').text(String(Math.round(stepValue * 100)));
+            });
+            
+        });
+    </script>
+
+</body>
+</html>

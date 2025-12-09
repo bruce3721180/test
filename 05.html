@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 圓形進度條範例</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/jquery-circle-progress@1.2.2/dist/circle-progress.min.js"></script>
+
+    <style>
+        /* CSS 樣式區域 */
+
+        .accu-progress {
+            width: 150px;
+            height: 150px;
+            position: relative; /* 作為文字定位的參考點 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            /* 設置一個白色背景以模擬圖片中的效果 */
+        }
+
+        /* 確保圓形進度條容器定位在中間 */
+        #circle-accu {
+            position: absolute;
+        }
+
+        /* 文字疊加層 */
+        .progress-text-overlay--2 {
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+            color: #333;
+            z-index: 10; /* 確保文字在圓環之上 */
+        }
+
+        .main-number--2 {
+            line-height: 1;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .label--2 {
+            font-size: 24px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="accu-progress">
+        <div id="circle-accu"></div>
+        
+        <div class="progress-text-overlay--2">
+            <span class="main-number--2"></span>
+            <span class="label--2">%</span>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript 腳本區域
+        $(document).ready(function() {
+            // 定義進度值 (42%)
+            const progressValue = 0.75; 
+
+            $('#circle-accu').circleProgress({
+                value: progressValue, // 進度值 (0.42)
+                size: 150,   // 圓環直徑 (稍微小於容器 200px，保持邊距)
+                startAngle: -Math.PI / 2, // 從頂部 (12點鐘方向) 開始
+                thickness: 12, // 圓環線條粗細 (略微增粗以匹配圖片)
+                
+                // *** 實現頭尾圓角的關鍵 ***
+                lineCap: 'round', 
+                
+                // *** 實現圖片中的漸層色 (從藍到紫) ***
+                fill: {
+                    // 根據圖片的顏色趨勢設置漸層
+                    gradient: ['#FFD04E', '#FF5353'], 
+                },
+                
+                // 軌道的背景色 (圖片中的淺灰色)
+                emptyFill: '#E0E0E0', 
+                
+                animation: {
+                    duration: 1200 // 動畫持續時間 (毫秒)
+                }
+            });
+
+            // 如果您想讓數字動態跳動，可以將 .main-number 的內容替換為以下程式碼：
+            $('#circle-accu').on('circle-animation-progress', function(event, progress, stepValue) {
+                // stepValue 是從 0 到 value (0.42) 的值
+                $(this).parent().find('.main-number--2').text(String(Math.round(stepValue * 100)));
+            });
+            
+        });
+    </script>
+
+</body>
+</html>

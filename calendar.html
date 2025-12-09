@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .day-of-week{
+            display: grid;
+            grid-template-columns: repeat(7,1fr);
+            width: 700px;
+        }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+            gap: 2px;
+            width: 700px;
+        }
+
+        .calendar-cell {
+            background-color: rgb(130, 165, 255);
+        }
+
+        .empty-cell {
+            background-color: rgb(192, 192, 192);
+        }
+
+        .today-cell {
+            background-color: rgb(255, 194, 39);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="day-of-week">
+        <div>日</div>
+        <div>ㄧ</div>
+        <div>二</div>
+        <div>三</div>
+        <div>四</div>
+        <div>五</div>
+        <div>六</div>
+    </div>
+    <div class="calendar"></div>
+
+
+
+
+
+    <script>
+
+        let today = new Date();
+        let year = today.getFullYear();
+        let month = today.getMonth();
+        
+        let lastDayOfMonth = new Date(year, month + 1, 0);
+        let totalDay = lastDayOfMonth.getDate();
+
+        let lastDayOfLastMonth=new Date(year,month,0);
+        let lastTotalDay=lastDayOfLastMonth.getDate();
+
+        // 計算這個月的1號是星期幾
+        let firstDayOfMonth = new Date(year, month, 1);
+        let startDay = firstDayOfMonth.getDay();
+
+        let calendar = document.querySelector('.calendar');
+
+        function generateCalendar() {
+
+            //填充上個月日期(灰底)    
+            for (let i = 0; i < startDay; i++) {
+                let emptyCell = document.createElement('div');
+                emptyCell.className = 'empty-cell';
+                emptyCell.textContent = lastTotalDay-startDay+1+i;
+
+                calendar.appendChild(emptyCell);
+            }
+            // 填充本月的日期
+            for (let day = 1; day <= totalDay; day++) {
+                let cell = document.createElement('div');
+                cell.className = 'calendar-cell';
+                cell.textContent = day;
+
+                if (day === today.getDate()) {
+                    cell.className = 'today-cell';
+                }
+            
+                calendar.appendChild(cell);
+            }
+
+        }
+
+        generateCalendar();
+    </script>
+</body>
+
+</html>

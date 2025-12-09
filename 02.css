@@ -1,0 +1,103 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+/* 核心尺寸定義 */
+.calendar-container {
+    width: 368px;
+    box-sizing: border-box;
+    padding: 20px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.calendar__title{
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+/* --- 月份標籤 --- */
+.month-labels {
+    display: flex;
+    justify-content: space-between;
+    width: 285px; 
+    margin: 5px 0 0 30px; 
+}
+.month-label {
+    width: 82px; 
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+}
+
+/* --- 網格佈局 --- */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: 26px repeat(10, 26px);
+    grid-auto-rows:26px; 
+    gap: 3px;
+}
+
+/* 垂直方向的星期標籤 (左側) */
+.day-label-col {
+    grid-column: 1 / 2;
+    grid-row: 1 / span 7; 
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.day-label {
+    height: 30px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: #555;
+}
+
+/* --- 方格樣式 --- */
+.calendar-cell {
+    background-color: #e0e0e0; /* 灰色底色 */
+    border-radius: 3px;
+    opacity: 0;
+    transition: opacity 0.5s ease-out, background-color 0.2s ease-out; 
+}
+.calendar-cell.filled {
+    background-color: #4a90e2; /* 藍色填入色 */
+}
+.calendar-cell.visible {
+    opacity: 1;
+}
+
+/* NEW: 當天日期的方格填入黃色背景 */
+.calendar-cell.today {
+    background-color: #f7d046 !important; /* 強制覆蓋藍色或灰色 */
+    box-shadow: 0 0 5px rgba(247, 208, 70, 0.8);
+}
+
+/* --- 連續天數顯示 --- */
+.counter-display {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 18px;
+    border-top: solid 1px #bbb;
+    color: #333;
+}
+.fire-icon {
+    font-size: 24px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+.streak-number {
+    font-size: 36px;
+    font-weight: bold;
+    color: #0141AD; 
+    display: inline-block;
+}

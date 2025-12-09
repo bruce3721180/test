@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>連續練習日曆</title>
+    <link rel="stylesheet" href="02.css">
+</head>
+
+<body>
+
+    <div class="calendar-container">
+
+        <div class="calendar__title">
+            每日練習紀錄
+        </div>
+
+        <div class="calendar-grid" id="calendarGrid">
+            <div class="day-label-col">
+                <span class="day-label">一</span>
+                <span class="day-label"></span>
+                <span class="day-label"></span>
+                <span class="day-label"></span>
+                <span class="day-label"></span>
+                <span class="day-label"></span>
+                <span class="day-label">日</span>
+            </div>
+        </div>
+
+        <div class="month-labels">
+            <span class="month-label" id="monthLabelLeft"></span>
+            <span class="month-label" id="monthLabelMiddle"></span>
+            <span class="month-label" id="monthLabelRight"></span>
+        </div>
+
+
+        <div class="counter-display">
+            <p>
+                <span class="fire-icon">🔥</span>
+                連續練習天數
+                <span id="streakCount" class="streak-number">0</span>
+                天
+            </p>
+        </div>
+    </div>
+
+    <script src="02.js"></script>
+</body>
+
+</html>
